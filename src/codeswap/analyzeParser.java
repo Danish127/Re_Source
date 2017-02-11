@@ -11,37 +11,35 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFormattedTextField;
 
 /**
  *
  * @author dbm3
  */
 public class analyzeParser {
-    private File file;
+    //private File file;
+    private JFormattedTextField window;
+    private char derp;// list
     BufferedReader br;
-    public analyzeParser(File file){
-        this.file = file;
+    public analyzeParser(JFormattedTextField window, char derp){
+        this.window = window;
+        this.derp = derp;
+        //this.file = file;
+        
     }
     
     public void analyze(){
-        try {
-            Scanner docParser = new Scanner(file);
-            Scanner lineParser = new Scanner("");
-            lineParser.useDelimiter(" \n\r.()[]{}");
-            while(docParser.hasNext()){
-                lineParser = new Scanner(docParser.nextLine());
-                while(lineParser.hasNext()){
-                    if(shouldNextBeFlagged(lineParser.next())){
-                        
-                    }
+        Scanner docParser = new Scanner(window.getText());
+        Scanner lineParser = new Scanner("");
+        lineParser.useDelimiter(" \n\r.()[]{}");
+        while(docParser.hasNext()){
+            lineParser = new Scanner(docParser.nextLine());
+            while(lineParser.hasNext()){
+                if(shouldNextBeFlagged(lineParser.next())){
+                    
                 }
             }
-            
-            
-            
-            
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(analyzeParser.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }
@@ -55,5 +53,10 @@ public class analyzeParser {
             default:
                 return false;
         }
+    }
+
+    public JFormattedTextField getFormattedOutput() {
+        return window;
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

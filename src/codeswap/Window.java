@@ -80,6 +80,11 @@ public class Window extends javax.swing.JFrame {
         jScrollPane2.setViewportView(variableList);
 
         analyzeButton.setText("Analyze");
+        analyzeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                analyzeButtonActionPerformed(evt);
+            }
+        });
 
         outputBrowserField.setText("Select output destination...");
 
@@ -174,6 +179,13 @@ public class Window extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_outputBrowserButtonActionPerformed
+
+    private void analyzeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_analyzeButtonActionPerformed
+        // TODO add your handling code here:
+        analyzeParser analyze = new analyzeParser(codeWindow, 'k');
+        analyze.analyze();
+        codeWindow = analyze.getFormattedOutput();
+    }//GEN-LAST:event_analyzeButtonActionPerformed
 
     /**
      * @param args the command line arguments
