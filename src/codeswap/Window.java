@@ -144,7 +144,7 @@ public class Window extends javax.swing.JFrame {
             inputFile = inputBrowser.getSelectedFile();
             try {
                 inputBrowserField.setText(inputFile.getCanonicalPath());
-                FileReader reader = new FileReader(inputFile.getCanonicalPath() + ".java");
+                FileReader reader = new FileReader(inputFile.getCanonicalPath());
                 BufferedReader br = new BufferedReader(reader);
                 codeWindow.read(br, null);
                 br.close();
@@ -162,7 +162,7 @@ public class Window extends javax.swing.JFrame {
         if (outputBrowser.getSelectedFile() != null) {
             outputFile = outputBrowser.getSelectedFile();
             try {
-                outputBrowserField.setText(outputFile.getCanonicalPath());
+                outputBrowserField.setText(outputFile.getCanonicalPath() + ".java");
                 FileWriter writer = new FileWriter(outputFile);
                 BufferedWriter bw = new BufferedWriter(writer);
                 codeWindow.write(bw);
