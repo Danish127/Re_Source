@@ -5,10 +5,16 @@
  */
 package codeswap;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -19,9 +25,10 @@ public class Window extends javax.swing.JFrame {
     /**
      * Creates new form Window
      */
-    
     private File inputFile;
     private File outputFile;
+    FileFilter filter = new FileNameExtensionFilter("Java source file", "java");
+
     public Window() {
         initComponents();
     }
@@ -40,9 +47,9 @@ public class Window extends javax.swing.JFrame {
         inputBrowserField = new javax.swing.JTextField();
         inputBrowserButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
+        codeWindow = new javax.swing.JFormattedTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        variableList = new javax.swing.JList<>();
         analyzeButton = new javax.swing.JButton();
         outputBrowserField = new javax.swing.JTextField();
         outputBrowserButton = new javax.swing.JButton();
@@ -63,20 +70,25 @@ public class Window extends javax.swing.JFrame {
             }
         });
 
-        jScrollPane1.setViewportView(jFormattedTextField1);
+        jScrollPane1.setViewportView(codeWindow);
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+        variableList.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane2.setViewportView(jList1);
+        jScrollPane2.setViewportView(variableList);
 
         analyzeButton.setText("Analyze");
 
         outputBrowserField.setText("Select output destination...");
 
         outputBrowserButton.setText("Browse...");
+        outputBrowserButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                outputBrowserButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -123,17 +135,45 @@ public class Window extends javax.swing.JFrame {
 
     private void inputBrowserButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputBrowserButtonActionPerformed
         // TODO add your handling code here:
-        inputBrowser.setVisible(true);
+        //inputBrowser.setVisible(true);
         //inputBrowser.
-        if(inputBrowser.getSelectedFile() != null){
+        inputBrowser.setFileFilter(filter);
+        inputBrowser.showOpenDialog(this);
+
+        if (inputBrowser.getSelectedFile() != null) {
             inputFile = inputBrowser.getSelectedFile();
             try {
                 inputBrowserField.setText(inputFile.getCanonicalPath());
+                FileReader reader = new FileReader(inputFile.getCanonicalPath() + ".java");
+                BufferedReader br = new BufferedReader(reader);
+                codeWindow.read(br, null);
+                br.close();
+                codeWindow.requestFocus();
             } catch (IOException ex) {
                 Logger.getLogger(Window.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_inputBrowserButtonActionPerformed
+
+    private void outputBrowserButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_outputBrowserButtonActionPerformed
+        // TODO add your handling code here:
+        outputBrowser.setFileFilter(filter);
+        outputBrowser.showSaveDialog(this);
+        if (outputBrowser.getSelectedFile() != null) {
+            outputFile = outputBrowser.getSelectedFile();
+            try {
+                outputBrowserField.setText(outputFile.getCanonicalPath());
+                FileWriter writer = new FileWriter(outputFile);
+                BufferedWriter bw = new BufferedWriter(writer);
+                codeWindow.write(bw);
+                bw.close();
+                codeWindow.setText("");
+                codeWindow.requestFocus();
+            } catch (IOException ex) {
+                Logger.getLogger(Window.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_outputBrowserButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -172,15 +212,15 @@ public class Window extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton analyzeButton;
+    private javax.swing.JFormattedTextField codeWindow;
     private javax.swing.JFileChooser inputBrowser;
     private javax.swing.JButton inputBrowserButton;
     private javax.swing.JTextField inputBrowserField;
-    private javax.swing.JFormattedTextField jFormattedTextField1;
-    private javax.swing.JList<String> jList1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JFileChooser outputBrowser;
     private javax.swing.JButton outputBrowserButton;
     private javax.swing.JTextField outputBrowserField;
+    private javax.swing.JList<String> variableList;
     // End of variables declaration//GEN-END:variables
 }
