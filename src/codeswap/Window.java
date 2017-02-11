@@ -140,8 +140,6 @@ public class Window extends javax.swing.JFrame {
 
     private void inputBrowserButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputBrowserButtonActionPerformed
         // TODO add your handling code here:
-        //inputBrowser.setVisible(true);
-        //inputBrowser.
         inputBrowser.setFileFilter(filter);
         inputBrowser.showOpenDialog(this);
 
@@ -168,11 +166,11 @@ public class Window extends javax.swing.JFrame {
             outputFile = outputBrowser.getSelectedFile();
             try {
                 outputBrowserField.setText(outputFile.getCanonicalPath() + ".java");
-                FileWriter writer = new FileWriter(outputFile);
+                FileWriter writer = new FileWriter(outputFile.getCanonicalPath() + ".java");
                 BufferedWriter bw = new BufferedWriter(writer);
                 codeWindow.write(bw);
                 bw.close();
-                codeWindow.setText("");
+                //codeWindow.setText("");
                 codeWindow.requestFocus();
             } catch (IOException ex) {
                 Logger.getLogger(Window.class.getName()).log(Level.SEVERE, null, ex);
@@ -182,9 +180,9 @@ public class Window extends javax.swing.JFrame {
 
     private void analyzeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_analyzeButtonActionPerformed
         // TODO add your handling code here:
-        analyzeParser analyze = new analyzeParser(codeWindow, 'k');
+        AnalyzeParser analyze = new AnalyzeParser(codeWindow, variableList);
         analyze.analyze();
-        codeWindow = analyze.getFormattedOutput();
+        codeWindow = analyze.getFormattedOutputWindow();
     }//GEN-LAST:event_analyzeButtonActionPerformed
 
     /**

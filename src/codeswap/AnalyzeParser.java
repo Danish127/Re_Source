@@ -12,21 +12,26 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFormattedTextField;
+import javax.swing.JList;
+import java.util.ArrayList;
 
 /**
  *
  * @author dbm3
  */
-public class analyzeParser {
+public class AnalyzeParser {
     //private File file;
     private JFormattedTextField window;
-    private char derp;// list
-    BufferedReader br;
-    public analyzeParser(JFormattedTextField window, char derp){
+    private JList<String> flaggedList;// list
+    private BufferedReader br;
+    private ArrayList<Word> row;
+    private ArrayList<ArrayList> parsed;
+    
+    public AnalyzeParser(JFormattedTextField window, JList<String> flaggedList){
         this.window = window;
-        this.derp = derp;
+        //this.derp = derp;
         //this.file = file;
-        
+        this.flaggedList = flaggedList;
     }
     
     public void analyze(){
@@ -36,6 +41,7 @@ public class analyzeParser {
         while(docParser.hasNext()){
             lineParser = new Scanner(docParser.nextLine());
             while(lineParser.hasNext()){
+                row.add(new Word(lineParser.next()));
                 if(shouldNextBeFlagged(lineParser.next())){
                     
                 }
@@ -55,8 +61,14 @@ public class analyzeParser {
         }
     }
 
-    public JFormattedTextField getFormattedOutput() {
+    public JFormattedTextField getFormattedOutputWindow() {
         return window;
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    public JList<String> getVariableList(){
+        return flaggedList;
+    }
+    
+    
 }

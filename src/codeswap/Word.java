@@ -21,4 +21,20 @@ public class Word {
     }
     
     //add get/sets
+    
+    public void setValue(String value){
+        this.value = value;
+    }
+    
+    public String getValue(){
+        return value;
+    }
+    
+    public void setFlagged(boolean flagged){
+        this.flagged = flagged;
+    }
+    
+    public boolean getFlagged(){
+        return flagged;
+    }
 }
