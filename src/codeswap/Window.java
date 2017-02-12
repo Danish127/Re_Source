@@ -55,6 +55,9 @@ public class Window extends javax.swing.JFrame {
         outputBrowserButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Re_Source");
+        setLocation(new java.awt.Point(100, 123));
+        setPreferredSize(new java.awt.Dimension(600, 370));
 
         inputBrowserField.setText("Select a file...");
         inputBrowserField.addActionListener(new java.awt.event.ActionListener() {
@@ -70,6 +73,7 @@ public class Window extends javax.swing.JFrame {
             }
         });
 
+        codeWindow.setPreferredSize(new java.awt.Dimension(20, 52));
         jScrollPane1.setViewportView(codeWindow);
 
         variableList.setModel(new javax.swing.AbstractListModel<String>() {
@@ -109,7 +113,7 @@ public class Window extends javax.swing.JFrame {
                     .addComponent(inputBrowserButton)))
             .addComponent(analyzeButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(outputBrowserField, javax.swing.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE)
+                .addComponent(outputBrowserField, javax.swing.GroupLayout.DEFAULT_SIZE, 494, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(outputBrowserButton))
         );
@@ -128,7 +132,8 @@ public class Window extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(outputBrowserField, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(outputBrowserButton)))
+                    .addComponent(outputBrowserButton))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         pack();
