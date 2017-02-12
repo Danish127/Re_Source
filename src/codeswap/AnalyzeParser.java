@@ -22,7 +22,7 @@ public class AnalyzeParser {
     private JList<String> flaggedList;// list
     private BufferedReader br;
     private ArrayList<Word> row = new ArrayList<Word>();
-    private ArrayList<ArrayList> parsed = new ArrayList<ArrayList>();
+    private ArrayList<ArrayList<Word> > parsed = new ArrayList<ArrayList<Word> >();
 
     public AnalyzeParser(JFormattedTextField window, JList<String> flaggedList) {
         this.window = window;
@@ -40,16 +40,34 @@ public class AnalyzeParser {
             //lineParser = new Scanner(docParser.nextLine());
             tmpList = lineToWord(docParser.nextLine());
             for (int i = 0; i < tmpList.size(); i++) {
+                System.out.println("Now evaluating: " + tmpList.get(i).getValue());
                 if (tmpList.get(i).getFlagged()) {
 
-                } else if (shouldNextBeFlagged(tmpList.get(i).getValue())) {
-                    tmpList.get(i).setFlagged(true);
+                }
+                if (shouldNextBeFlagged(tmpList.get(i).getValue())) {
+                    tmpList.get(i+2).setFlagged(true);
                     //flaggedList.
                     //flaggedList.add(tmpList.get(i).getValue()));
                     System.out.println("Found something");
                 }
             }
             parsed.add(tmpList);
+            
+            window.setText("");
+            for(int i = 0; i < parsed.size(); i++){
+                for(int j  = 0; j < parsed.get(i).size(); j++){
+                    if(parsed.get(i).size() - j > 1){
+                        if(parsed.get(i).get(j + 1).getValue().length() == 1){
+                            window.setText(window.getText() + parsed.get(i).get(j).getValue());
+                        }else{
+                            window.setText(window.getText() + parsed.get(i).get(j).getValue());
+                        }
+                    }
+                    //window.
+                    
+                }
+                window.setText(window.getText() + "\r\n");
+            }
             /*while(lineParser.hasNext()){
                 tmp = lineParser.next();
                 //row.add(new Word(tmp));
@@ -89,14 +107,18 @@ public class AnalyzeParser {
         char tmpChar;
         for (int i = 0; i < line.length(); i++) {
             tmpChar = line.charAt(i);
-            if (tmpChar == ' ' || tmpChar == '\t' || tmpChar == '\n' || tmpChar == '\r' || tmpChar == '.' || tmpChar == '+' || tmpChar == '-' || tmpChar == '*' || tmpChar == '/' || tmpChar == '=' || tmpChar == '|' || tmpChar == '(' || tmpChar == ')' || tmpChar == '[' || tmpChar == ']' || tmpChar == '{' || tmpChar == '}') {
+            if (tmpChar == ' ' || tmpChar == '\t' || tmpChar == '\n' || tmpChar == '\r' || tmpChar == '.' || tmpChar == '+' || tmpChar == '-' || tmpChar == '*' || tmpChar == '/' || tmpChar == '=' || tmpChar == '|' || tmpChar == '(' || tmpChar == ')' || tmpChar == '[' || tmpChar == ']' || tmpChar == '{' || tmpChar == '}' || tmpChar == ';') {
                 tmpList.add(new Word(tmpStr));
+                System.out.println("String added:" + tmpStr);
                 tmpStr = "";
                 tmpList.add(new Word(tmpChar));
+                System.out.println("Char added:" + tmpChar);
             } else {
                 tmpStr += tmpChar;
             }
         }
+        tmpList.add(new Word(tmpStr));
+        tmpList.add(new Word('\n'));
         return tmpList;
     }
 }
