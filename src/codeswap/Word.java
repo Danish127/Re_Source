@@ -12,23 +12,43 @@ import java.awt.Color;
  * @author dbm3
  */
 public class Word {
-    private String value;
+    private char cValue;
+    private String sValue;
+    private enum type {character, string};
+    private type ofValue;
     private boolean flagged = false;
-    private enum flaggedFor {deletion, swap;}
+    private enum flaggedFor {deletion, swap};
+    private flaggedFor flag;
     private Color formattedColor;
-    public Word(String value){
-        this.value = value;
+    
+    public Word(String sValue){
+        this.sValue = sValue;
+        //type.string;
+        ofValue = type.string;
+    }
+    
+    public Word(char cValue){
+        this.cValue = cValue;
+        ofValue = type.character;
     }
     
     //add get/sets
     
     public void setValue(String value){
-        this.value = value;
+        this.sValue = value;
     }
     
     public String getValue(){
-        return value;
+        if(ofValue == type.string){
+            return sValue;
+        }else{
+            return cValue + "";
+        }
     }
+    
+    /*public char getValue(){
+        return cValue;
+    }*/
     
     public void setFlagged(boolean flagged){
         this.flagged = flagged;
