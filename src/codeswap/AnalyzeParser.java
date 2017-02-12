@@ -37,13 +37,13 @@ public class AnalyzeParser {
     public void analyze(){
         Scanner docParser = new Scanner(window.getText());
         Scanner lineParser = new Scanner("");
-        lineParser.useDelimiter(" \n\r.()[]{}");
+        lineParser.useDelimiter("[ \t\n\r.(){}]");
         while(docParser.hasNext()){
             lineParser = new Scanner(docParser.nextLine());
             while(lineParser.hasNext()){
                 row.add(new Word(lineParser.next()));
                 if(shouldNextBeFlagged(lineParser.next())){
-                    
+                    System.out.println("Found something");
                 }
             }
         }
